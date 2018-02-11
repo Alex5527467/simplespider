@@ -24,15 +24,16 @@ class JDSpider(scrapy.spiders.Spider):
         comment = response.css('div.jDesc::attr(title)').extract()
         #price = response.css('span.jdNum d-jd-price::text').extract()
         jdID = response.xpath('//*[@class="jdNum d-jd-price"]/@jdprice').extract()
+        imgfirst = response.xpath('//*[@class="jPic"]')
+        imgurl = imgfirst.css('img.J_imgLazyload::attr(original)').extract()#xpath('//*[@class="jPic"]/[@class="J_imgLazyload"]/@original').extract()
         item = JdspiderItem()
-        item['product_id']=[]
-        item['comment']=[]
         item['price']=[]
         
         #print type(item['product_id'])
         #print len(jdID)
         item['product_id']=jdID
         item['comment']= comment
+        item['img_url']= imgurl
         for i in range(0,len(jdID)):
             url='https://p.3.cn/prices/mgets?skuIds=J_'+jdID[i]
             req = urllib2.Request(url)

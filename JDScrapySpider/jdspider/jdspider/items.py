@@ -14,4 +14,6 @@ class JdspiderItem(scrapy.Item):
     price = scrapy.Field()
     comment = scrapy.Field()
     product_id = scrapy.Field()
+    img_url = scrapy.Field()
+    images = scrapy.Field()
     pass
